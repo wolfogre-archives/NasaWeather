@@ -45,7 +45,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         views: {
           'tab-dash': {
             templateUrl: 'templates/tab-dash.html',
-            controller: 'DashCtrl'
+            controller: 'DashCtrl',
           }
         },
         onEnter: function () {
@@ -55,6 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
       .state('tab.chats', {
         url: '/chats',
+        cache:'false',
         views: {
           'tab-chats': {
             templateUrl: 'templates/tab-chats.html',
