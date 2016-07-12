@@ -16,6 +16,7 @@ angular.module('starter.controllers', [])
   };
   $scope.lat = projectData.getData('lat');
   $scope.lon = projectData.getData('lon');
+  $scope.weatherdata = projectData.getData('weatherdata');
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {

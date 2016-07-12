@@ -87,7 +87,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     $urlRouterProvider.otherwise('/tab/dash');
 
   })
-  .directive('pvmap', function (projectData) {
+  .directive('pvmap', function (projectData, gainData) {
     return {
       restrict: 'E',
       replace: true,
@@ -104,6 +104,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat();
           projectData.addOrUpdateData(e.lnglat.getLng(),"lon");
           projectData.addOrUpdateData(e.lnglat.getLat(),"lat");
+          
+          gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/weather', {
+            lon: Number(e.lnglat.getLng()),
+            lat: Number(e.lnglat.getLat())
+          }).then(function (data) {
+            projectData.addOrUpdateData(data.data,"weatherdata");
+          });
+
+
         });
         var auto = new AMap.Autocomplete({
           input: "tipinput"
@@ -131,6 +140,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     this.addOrUpdateData = function (data, propName) {
         this.projectData[propName] = data;
     };
-});
+})
+
+.service('gainData', function ($http, $q) {
+    this.getDataFromInterface = function (url, params) {
+        var defered = $q.defer();
+        var httpOpt = {
+            method: 'GET',
+            url: url
+        };
+        if (params) {
+            httpOpt.params = params;
+        }
+        $http(httpOpt).then(function (response) {
+            defered.resolve(response.data);
+        });
+
+        return defered.promise;
+    }
+});;
 
 

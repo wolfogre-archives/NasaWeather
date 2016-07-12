@@ -2,6 +2,22 @@
   <ion-content>
     <p>lat={{!lat ? 'null' : lat}}</p>
     <p>lon={{!lon ? 'null' : lon}}</p>
-    
+
+    <table class="table table-bordered">
+                    <tr>
+                        <td>月份</td>
+                        <td>辐照度</td>
+                        <td>温度(°C)</td>
+                        <td>湿度(%)</td>
+                        <td>风速(m/s)</td>
+                    </tr>
+                    <tr ng-repeat="monthinfo in weatherdata">
+                        <td>{{$index + 1}}月</td>
+                        <td><input ng-model="monthinfo.H" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+                        <td><input ng-model="monthinfo.temperature" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+                        <td><input ng-model="monthinfo.humidity" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+                        <td><input ng-model="monthinfo.wind" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+                    </tr>
+                </table>
   </ion-content>
 </ion-view>
